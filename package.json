@@ -1,0 +1,26 @@
+{
+  "name": "cuiudobo",
+  "version": "1.0.0",
+  "description": "Agente de IA Pessoal via Telegram",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.0.0",
+    "csv-parse": "^5.5.6",
+    "dotenv": "^16.4.5",
+    "grammy": "^1.22.4",
+    "groq-sdk": "^0.3.3",
+    "pdf-parse": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.10",
+    "@types/node": "^20.12.7",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
+  }
+}
