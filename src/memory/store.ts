@@ -8,6 +8,7 @@ export interface DbMessage {
   content: string;
   tool_calls: string | null;
   tool_call_id: string | null;
+  tool_name: string | null;
   created_at: string;
 }
 
@@ -23,8 +24,8 @@ export class MemoryStore {
   saveMessage(userId: number, message: ChatMessage): number {
     const db = getDb();
     const stmt = db.prepare(`
-      INSERT INTO messages (user_id, role, content, tool_calls, tool_call_id)
-      VALUES (?, ?, ?, ?, ?)
+      INSERT INTO messages (user_id, role, content, tool_calls, tool_call_id, tool_name)
+      VALUES (?, ?, ?, ?, ?, ?)
     `);
 
     const info = stmt.run(
@@ -32,7 +33,8 @@ export class MemoryStore {
       message.role,
       message.content || '',
       message.tool_calls ? JSON.stringify(message.tool_calls) : null,
-      message.tool_call_id || null
+      message.tool_call_id || null,
+      message.name || null
     );
 
     return info.lastInsertRowid as number;

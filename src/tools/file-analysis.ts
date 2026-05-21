@@ -65,6 +65,9 @@ export const analyzeFileTool: Tool = {
         extractedContent = extractedContent.substring(0, MAX_LENGTH) + '\n\n...[Conteúdo truncado devido ao tamanho excessivo]';
       }
 
+      // Envolve o conteúdo em tags XML para criar uma barreira clara no prompt do LLM
+      extractedContent = `<file_data>\n${extractedContent}\n</file_data>`;
+
       // Deleta o arquivo após análise
       try {
         unlinkSync(filePath);

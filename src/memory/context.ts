@@ -64,9 +64,16 @@ export class ContextManager {
         } catch (e) {}
       }
 
+      let name = dbMsg.tool_name || undefined;
+      // Correção para histórico antigo corrompido que não tem tool_name
+      if (dbMsg.role === 'tool' && !name) {
+         name = 'unknown_tool'; 
+      }
+
       context.push({
         role: dbMsg.role,
         content: dbMsg.content,
+        name: name,
         tool_call_id: dbMsg.tool_call_id || undefined,
         tool_calls,
       });

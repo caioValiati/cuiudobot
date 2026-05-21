@@ -19,10 +19,19 @@ export function initDatabase() {
       content TEXT NOT NULL,
       tool_calls TEXT,
       tool_call_id TEXT,
+      tool_name TEXT,
       created_at TEXT DEFAULT (datetime('now', 'localtime'))
     );
     CREATE INDEX IF NOT EXISTS idx_messages_user ON messages(user_id, id DESC);
   `);
+
+  // Tenta adicionar a coluna tool_name caso a tabela já exista de uma versão anterior
+  try {
+    db.exec(`ALTER TABLE messages ADD COLUMN tool_name TEXT;`);
+    logger.info('Coluna tool_name adicionada à tabela messages (Migração).');
+  } catch (e: any) {
+    // Ignora se a coluna já existir (erro esperado: duplicate column name)
+  }
 
   // Tabela de resumos (memória comprimida)
   db.exec(`
